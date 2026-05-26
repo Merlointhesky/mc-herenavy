@@ -13,6 +13,18 @@ A premium [Paper](https://papermc.io) Minecraft plugin for **RPG-style Explorati
   - **Level-Based POI Unlock Progression**: Higher-tier biomes and structures require meeting minimum Exploration level milestones before they can be tracked.
   - **Level 100 Capstone Reward**: Grants players the unique **"World Explorer" Elytra** upon achieving mastery level.
 
+- **Immersive Multi-Page Cartography GUI System**:
+  - Open a sleek main landing selection hub using `/hn start` or `/explore`.
+  - **Hub Features**:
+    - Displays complete live player stats (Level, EXP progression, Biomes found, Landmarks found).
+    - Links to dedicated visual navigation menus.
+  - **Dedicated Biomes Map Page (`🌿 Biomes Map 🌿`)**: A symmetrical 54-slot chest containing all **28 registered biomes**, locked by exploration level locks.
+  - **Dedicated Landmarks Map Page (`🏰 Landmarks Map 🏰`)**: A symmetrical 54-slot chest displaying all **28 registered vanilla structures** sorted in progression order.
+  - **Interactive States**:
+    - **Locked**: Represented by gray stained glass panes indicating the required Level to unlock.
+    - **Unlocked / Unvisited**: Represented by unique thematic items (e.g., *Trial Key* for Trial Chambers, *Echo Shard* for Ancient Cities). Click to start tracking!
+    - **Completed / Discovered**: Renders a glowing enchanted item showing that you've discovered it.
+
 - **Visual Navigation Suite (Client-Mod-Free)**:
   - **Skyrim-Style Compass HUD**: Computes real-time angular headings towards your destination and renders a smooth scrolling directional compass on your **Action Bar** or **Boss Bar** (e.g. `W - NW - N[♦] - NE - E`).
   - **3D Unicode TomTom Arrow**: Spawns an invisible Paper `TextDisplay` entity containing a bold direction arrow (➔) exactly 3-4 blocks in front of the player. It rotates dynamically in real-time as you spin and move.
@@ -24,12 +36,9 @@ A premium [Paper](https://papermc.io) Minecraft plugin for **RPG-style Explorati
   - Records the exact physical location of each structure and holds a **shared list of players** who have successfully discovered it, preventing duplicate structure generation configurations in multiplayer environments.
   - **Origin Shifting Target Search**: Uses Bukkit's structure location API. If the nearest search coordinate matches a structure already discovered by the player, it mathematically shifts the search origin (e.g. +1000 blocks) and searches again, ensuring navigation always guides you to *new*, unexplored territory!
 
-- **Interactive Cartography GUI**:
-  - Open a gorgeous double-chest (54-slot) custom inventory using `/hn start` or `/explore`.
-  - **Interactive States**:
-    - **Locked**: Represented by gray stained glass panes indicating the required Level to unlock.
-    - **Unlocked / Unvisited**: Represented by unique thematic items (e.g., *Prismarine* for Ocean Monuments, *Nether Star* for Nether Fortresses). Click to start tracking!
-    - **Completed / Discovered**: Renders a glowing enchanted item showing that you've discovered it.
+- **Smart Deep Configuration Merging**:
+  - Modeled after premium integration standards, `ConfigManager` automatically compares your local server `config.yml` with default jar resources on startup.
+  - Dynamically merges and appends new structures, biomes, or level unlock categories into existing config sections without altering or resetting any of your custom parameters.
 
 ---
 
@@ -39,7 +48,7 @@ All commands can be run with `/hn` or `/explore` instead of `/herenavy`.
 
 | Command | Description | Permission |
 |---------|-------------|------------|
-| `/hn start` (or `/explore`) | Opens the double-chest Cartography map GUI | `herenavy.use` |
+| `/hn start` (or `/explore`) | Opens the main Selection Cartography Hub | `herenavy.use` |
 | `/hn stop` | Cancels any active navigation target | `herenavy.use` |
 | `/hn info` | Displays your current Exploration Level, EXP, and progression status | `herenavy.use` |
 | `/hn go <x> <y> <z>` | Starts manual coordinates navigation (Arrival-only, no EXP rewards) | `herenavy.use` |

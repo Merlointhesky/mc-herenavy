@@ -51,8 +51,8 @@ public final class PlayerListener implements Listener {
 
         String title = MiniMessage.miniMessage().serialize(event.getView().title());
         
-        // 1. Verify if it's the Cartography Map custom double chest
-        if (title.contains("Cartography Map")) {
+        // 1. Verify if it's any of our Cartography-related custom menus
+        if (title.contains("Cartography Map") || title.contains("Biomes Map") || title.contains("Landmarks Map")) {
             event.setCancelled(true);
 
             if (event.getRawSlot() >= event.getInventory().getSize()) {
@@ -62,7 +62,7 @@ public final class PlayerListener implements Listener {
             ItemStack clicked = event.getCurrentItem();
             if (clicked == null) return;
 
-            explorerGUI.handleGUIClick(player, event.getRawSlot(), clicked);
+            explorerGUI.handleGUIClick(player, title, event.getRawSlot(), clicked);
         }
         
         // 2. Verify if it's the Navigation Settings custom menu

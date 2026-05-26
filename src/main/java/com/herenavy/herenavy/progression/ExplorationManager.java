@@ -226,18 +226,6 @@ public final class ExplorationManager {
      * Performs a localized search for nearby generated structures to trigger discoveries
      */
     private void checkStructureDiscovery(Player player, PlayerData data) {
-        // Scan levels config to identify all trackable structures
-        Set<String> structureKeys = new HashSet<>();
-        for (List<String> list : plugin.getConfigManager().getLevelUnlocks().values()) {
-            for (String key : list) {
-                if (key.startsWith("minecraft:") && !key.contains("plains") && !key.contains("forest") && !key.contains("desert") && !key.contains("ocean") && !key.contains("swamp") && !key.contains("jungle") && !key.contains("savanna") && !key.contains("badlands") && !key.contains("cherry_grove")) {
-                    structureKeys.add(key); // Likely a structure if it doesn't match standard biomes
-                } else if (key.equals("minecraft:village_plains") || key.equals("minecraft:mineshaft") || key.equals("minecraft:pillager_outpost") || key.equals("minecraft:desert_pyramid") || key.equals("minecraft:jungle_pyramid") || key.equals("minecraft:ocean_monument") || key.equals("minecraft:mansion") || key.equals("minecraft:bastion_remnant") || key.equals("minecraft:stronghold") || key.equals("minecraft:ancient_city") || key.equals("minecraft:trial_chambers")) {
-                    structureKeys.add(key);
-                }
-            }
-        }
-
         // Check if the current chunk contains any part (pieces) of our tracked structures
         org.bukkit.Chunk chunk = player.getLocation().getChunk();
         Collection<org.bukkit.generator.structure.GeneratedStructure> structures = player.getWorld().getStructures(chunk.getX(), chunk.getZ());
@@ -245,7 +233,9 @@ public final class ExplorationManager {
         for (org.bukkit.generator.structure.GeneratedStructure genStruct : structures) {
             Structure struct = genStruct.getStructure();
             String structKey = struct.getKey().toString();
-            if (structureKeys.contains(structKey)) {
+            
+            // Dynamically check against the registered structures in the GUI!
+            if (plugin.getExplorerGUI().isRegisteredStructure(structKey)) {
                 // Standing inside a piece chunk! Find center coordinate (within 10 chunks radius) to save uniquely
                 StructureSearchResult result = player.getWorld().locateNearestStructure(player.getLocation(), struct, 10, false);
                 if (result == null) continue;

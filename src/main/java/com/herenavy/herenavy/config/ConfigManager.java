@@ -4,6 +4,7 @@ import com.herenavy.herenavy.HereNavyPlugin;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import java.io.File;
 import java.util.*;
 
 public final class ConfigManager {
@@ -31,6 +32,12 @@ public final class ConfigManager {
 
     public void loadConfig() {
         plugin.saveDefaultConfig();
+        
+        File configFile = new java.io.File(plugin.getDataFolder(), "config.yml");
+        if (configFile.exists()) {
+            mergeMissingDefaults(configFile, "config.yml");
+        }
+
         plugin.reloadConfig();
         FileConfiguration config = plugin.getConfig();
 
@@ -65,6 +72,48 @@ public final class ConfigManager {
                     }
                 }
             }
+        }
+    }
+
+    private void mergeMissingDefaults(java.io.File localFile, String resourcePath) {
+        try {
+            java.io.InputStream resourceStream = plugin.getResource(resourcePath);
+            if (resourceStream == null) return;
+
+            org.bukkit.configuration.file.YamlConfiguration jarConfig = org.bukkit.configuration.file.YamlConfiguration.loadConfiguration(
+                new java.io.InputStreamReader(resourceStream, java.nio.charset.StandardCharsets.UTF_8)
+            );
+
+            org.bukkit.configuration.file.YamlConfiguration localConfig = org.bukkit.configuration.file.YamlConfiguration.loadConfiguration(localFile);
+
+            boolean modified = false;
+            for (String key : jarConfig.getKeys(true)) {
+                if (!localConfig.contains(key)) {
+                    localConfig.set(key, jarConfig.get(key));
+                    modified = true;
+                } else if (jarConfig.isList(key) && localConfig.isList(key)) {
+                    List<?> jarList = jarConfig.getList(key);
+                    List<Object> localList = new ArrayList<>(localConfig.getList(key));
+                    boolean listModified = false;
+                    for (Object val : jarList) {
+                        if (!localList.contains(val)) {
+                            localList.add(val);
+                            listModified = true;
+                        }
+                    }
+                    if (listModified) {
+                        localConfig.set(key, localList);
+                        modified = true;
+                    }
+                }
+            }
+
+            if (modified) {
+                localConfig.save(localFile);
+                plugin.getLogger().info("Successfully merged new default configuration keys into " + localFile.getName() + " without altering existing entries.");
+            }
+        } catch (Exception e) {
+            plugin.getLogger().severe("Failed to safely merge defaults for " + localFile.getName() + ": " + e.getMessage());
         }
     }
 
