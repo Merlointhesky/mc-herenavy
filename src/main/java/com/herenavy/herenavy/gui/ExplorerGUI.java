@@ -83,6 +83,8 @@ public final class ExplorerGUI {
         structureEntries.add(new POIEntry("minecraft:mansion", Material.DARK_OAK_DOOR, "<dark_green>Woodland Mansion</dark_green>"));
         structureEntries.add(new POIEntry("minecraft:bastion_remnant", Material.GILDED_BLACKSTONE, "<gold>Bastion Remnant</gold>"));
         structureEntries.add(new POIEntry("minecraft:stronghold", Material.ENDER_EYE, "<dark_purple>Stronghold Keep</dark_purple>"));
+        structureEntries.add(new POIEntry("minecraft:trial_chambers", Material.TRIAL_KEY, "<gold>Trial Chambers</gold>"));
+        structureEntries.add(new POIEntry("minecraft:ancient_city", Material.ECHO_SHARD, "<dark_aqua>Ancient City Ruins</dark_aqua>"));
     }
 
     /**

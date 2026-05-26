@@ -40,6 +40,8 @@ unlocks:
     - "minecraft:ocean_monument"
     - "minecraft:mansion"
     - "minecraft:flower_forest"
+  level_70:
+    - "minecraft:trial_chambers"
   level_80:
     - "minecraft:bastion_remnant"
     - "minecraft:nether_wastes"
@@ -47,6 +49,7 @@ unlocks:
   level_90:
     - "minecraft:stronghold"
     - "minecraft:the_end"
+    - "minecraft:ancient_city"
   level_100:
     reward_item: ELYTRA
     reward_name: "<gold><bold>World Explorer</bold></gold>"

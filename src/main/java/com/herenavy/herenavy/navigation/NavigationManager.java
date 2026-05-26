@@ -137,19 +137,29 @@ public final class NavigationManager {
 
         player.sendMessage(MiniMessage.miniMessage().deserialize("<gray>Locating nearest unexplored " + formatKey(structureKey) + "...</gray>"));
 
-        Location origin = player.getLocation();
+        Location currentSearchOrigin = player.getLocation();
         Location targetLoc = null;
+        Set<String> encounteredLocs = new HashSet<>();
 
-        // Perform mathematical Origin Shifting (up to 6 iteration queries)
-        for (int attempt = 1; attempt <= 6; attempt++) {
-            // radius = 100 chunks (1600 blocks range)
-            StructureSearchResult searchResult = player.getWorld().locateNearestStructure(origin, structure, 100, false);
+        // Perform mathematical Origin Shifting (up to 10 attempts)
+        for (int attempt = 1; attempt <= 10; attempt++) {
+            // Search with a large 500 chunks radius (8000 blocks range)
+            StructureSearchResult searchResult = player.getWorld().locateNearestStructure(currentSearchOrigin, structure, 500, false);
             if (searchResult == null) {
                 break;
             }
 
             Location foundLoc = searchResult.getLocation();
-            
+            String locKey = foundLoc.getBlockX() + "," + foundLoc.getBlockZ();
+
+            // If we are getting the exact same physical coordinates again, shift randomly to break any loop
+            if (encounteredLocs.contains(locKey)) {
+                double angle = Math.random() * 2 * Math.PI;
+                currentSearchOrigin = foundLoc.clone().add(Math.cos(angle) * 3000, 0, Math.sin(angle) * 3000);
+                continue;
+            }
+            encounteredLocs.add(locKey);
+
             // Check if player has already discovered this specific structure instance
             boolean alreadyFound = structureDiscoveryManager.hasPlayerDiscovered(
                 player.getUniqueId(), 
@@ -163,8 +173,9 @@ public final class NavigationManager {
                 break; // Found an unexplored structure!
             }
 
-            // Unexplored structure match failed. Shift origin mathematically by +1000 blocks on X/Z and search again
-            origin = foundLoc.clone().add(1000, 0, 1000);
+            // Unexplored structure match failed. Shift origin mathematically in a random direction to search a new quadrant
+            double angle = Math.random() * 2 * Math.PI;
+            currentSearchOrigin = foundLoc.clone().add(Math.cos(angle) * 3000, 0, Math.sin(angle) * 3000);
         }
 
         if (targetLoc == null) {
@@ -262,7 +273,7 @@ public final class NavigationManager {
                         double dz = dest.getZ() - pLoc.getZ();
                         double distance2D = Math.sqrt(dx * dx + dz * dz);
                         
-                        if (distance2D <= 15) {
+                        if (distance2D <= 30) {
                             stopNavigation(player, true);
                         }
                     }
