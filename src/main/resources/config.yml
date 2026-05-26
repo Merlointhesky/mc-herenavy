@@ -1,0 +1,52 @@
+# ==========================================
+#          HereNavy Configuration
+# ==========================================
+
+# -- Navigation Toggles --
+navigation-visuals:
+  skyrim-compass: true
+  skyrim-compass-style: ACTIONBAR # Options: BOSSBAR, ACTIONBAR
+  tomtom-arrow: true
+  arrow-style: TEXT_DISPLAY # Options: TEXT_DISPLAY, PARTICLES, BOTH, NONE
+
+# -- Exploration Progression --
+max-level: 100
+exp-per-new-biome: 50
+exp-per-new-structure: 500
+
+# -- Level Unlocks (Exploration Level requirements for POI tracking) --
+# Formatted as Level -> List of Minecraft keys (structures or biomes)
+unlocks:
+  level_1:
+    - "minecraft:village_plains"
+    - "minecraft:plains"
+    - "minecraft:forest"
+    - "minecraft:desert"
+    - "minecraft:ocean"
+  level_10:
+    - "minecraft:mineshaft"
+    - "minecraft:dark_forest"
+    - "minecraft:swamp"
+    - "minecraft:jungle"
+  level_20:
+    - "minecraft:pillager_outpost"
+    - "minecraft:savanna"
+    - "minecraft:badlands"
+  level_40:
+    - "minecraft:desert_pyramid"
+    - "minecraft:jungle_pyramid"
+    - "minecraft:cherry_grove"
+  level_60:
+    - "minecraft:ocean_monument"
+    - "minecraft:mansion"
+    - "minecraft:flower_forest"
+  level_80:
+    - "minecraft:bastion_remnant"
+    - "minecraft:nether_wastes"
+    - "minecraft:basalt_deltas"
+  level_90:
+    - "minecraft:stronghold"
+    - "minecraft:the_end"
+  level_100:
+    reward_item: ELYTRA
+    reward_name: "<gold><bold>World Explorer</bold></gold>"

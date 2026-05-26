@@ -1,0 +1,18 @@
+name: HereNavy
+version: '${version}'
+main: com.herenavy.herenavy.HereNavyPlugin
+description: Premium exploration and visual navigation RPG mod with Skyrim compass, TomTom 3D arrow, and particle trails.
+api-version: '1.21'
+author: Merlointhesky
+
+commands:
+  herenavy:
+    description: Main command for HereNavy exploration
+    usage: /herenavy <info|start|stop|go>
+    permission: herenavy.use
+    aliases: [hn, explore]
+
+permissions:
+  herenavy.use:
+    description: Allows use of HereNavy exploration commands
+    default: true
