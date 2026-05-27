@@ -1,0 +1,91 @@
+# ==========================================
+#          HereNavy Configuration
+# ==========================================
+
+# -- Navigation Toggles --
+navigation-visuals:
+  skyrim-compass: true
+  skyrim-compass-style: ACTIONBAR # Options: BOSSBAR, ACTIONBAR
+  tomtom-arrow: true
+  arrow-style: TEXT_DISPLAY # Options: TEXT_DISPLAY, PARTICLES, BOTH, NONE
+
+# -- Exploration Progression --
+max-level: 100
+exp-per-new-biome: 50
+exp-per-new-structure: 500
+
+# -- Level Unlocks (Exploration Level requirements for POI tracking) --
+# Formatted as Level -> List of Minecraft keys (structures or biomes)
+unlocks:
+  level_1:
+    - "minecraft:village_plains"
+    - "minecraft:plains"
+    - "minecraft:forest"
+    - "minecraft:desert"
+    - "minecraft:ocean"
+  level_5:
+    - "minecraft:meadow"
+    - "minecraft:village_desert"
+    - "minecraft:village_savanna"
+    - "minecraft:village_taiga"
+  level_10:
+    - "minecraft:village_snowy"
+    - "minecraft:mineshaft"
+    - "minecraft:mineshaft_mesa"
+    - "minecraft:dark_forest"
+    - "minecraft:swamp"
+    - "minecraft:jungle"
+    - "minecraft:dripstone_caves"
+  level_15:
+    - "minecraft:swamp_hut"
+    - "minecraft:igloo"
+  level_20:
+    - "minecraft:pillager_outpost"
+    - "minecraft:shipwreck"
+    - "minecraft:shipwreck_beached"
+    - "minecraft:savanna"
+    - "minecraft:badlands"
+    - "minecraft:lush_caves"
+  level_30:
+    - "minecraft:ruined_portal"
+    - "minecraft:buried_treasure"
+    - "minecraft:ocean_ruin_cold"
+    - "minecraft:ocean_ruin_warm"
+    - "minecraft:mangrove_swamp"
+    - "minecraft:grove"
+  level_40:
+    - "minecraft:desert_pyramid"
+    - "minecraft:jungle_pyramid"
+    - "minecraft:trail_ruins"
+    - "minecraft:cherry_grove"
+    - "minecraft:ice_spikes"
+  level_50:
+    - "minecraft:fortress"
+    - "minecraft:ruined_portal_nether"
+    - "minecraft:frozen_peaks"
+    - "minecraft:mushroom_fields"
+  level_60:
+    - "minecraft:monument"
+    - "minecraft:mansion"
+    - "minecraft:flower_forest"
+  level_70:
+    - "minecraft:trial_chambers"
+    - "minecraft:nether_fossil"
+  level_80:
+    - "minecraft:bastion_remnant"
+    - "minecraft:nether_wastes"
+    - "minecraft:basalt_deltas"
+    - "minecraft:crimson_forest"
+    - "minecraft:warped_forest"
+    - "minecraft:soul_sand_valley"
+  level_90:
+    - "minecraft:stronghold"
+    - "minecraft:ancient_city"
+    - "minecraft:end_city"
+    - "minecraft:the_end"
+    - "minecraft:deep_dark"
+    - "minecraft:small_end_islands"
+    - "minecraft:end_highlands"
+  level_100:
+    reward_item: ELYTRA
+    reward_name: "<gold><bold>World Explorer</bold></gold>"
