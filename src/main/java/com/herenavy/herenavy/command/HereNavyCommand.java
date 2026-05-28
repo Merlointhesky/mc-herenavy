@@ -82,9 +82,17 @@ public final class HereNavyCommand implements CommandExecutor, TabCompleter {
                 handleManualGo(player, args);
                 break;
 
+            case "admin":
+                if (!player.hasPermission("herenavy.admin")) {
+                    player.sendMessage(MiniMessage.miniMessage().deserialize("<red>You do not have permission to access the HereNavy Admin GUI.</red>"));
+                } else {
+                    plugin.getAdminGUI().openGUI(player);
+                }
+                break;
+
             default:
                 player.sendMessage(MiniMessage.miniMessage().deserialize(
-                    "<red>Unknown subcommand! Use: /hn <info|start|stop|go|config></red>"
+                    "<red>Unknown subcommand! Use: /hn <info|start|stop|go|config|admin></red>"
                 ));
                 break;
         }
@@ -165,7 +173,10 @@ public final class HereNavyCommand implements CommandExecutor, TabCompleter {
         if (!sender.hasPermission("herenavy.use")) return list;
 
         if (args.length == 1) {
-            List<String> subs = Arrays.asList("info", "start", "stop", "go", "config");
+            List<String> subs = new ArrayList<>(Arrays.asList("info", "start", "stop", "go", "config"));
+            if (sender.hasPermission("herenavy.admin")) {
+                subs.add("admin");
+            }
             String query = args[0].toLowerCase();
             for (String s : subs) {
                 if (s.startsWith(query)) {

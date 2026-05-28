@@ -234,6 +234,11 @@ public final class ExplorationManager {
             Structure struct = genStruct.getStructure();
             String structKey = struct.getKey().toString();
             
+            // Skip discovery if structure tracking is disabled by administration
+            if (!plugin.getConfigManager().isStructureTracked(structKey)) {
+                continue;
+            }
+
             // Dynamically check against the registered structures in the GUI!
             if (plugin.getExplorerGUI().isRegisteredStructure(structKey)) {
                 // Standing inside a piece chunk! Find center coordinate (within 10 chunks radius) to save uniquely
@@ -241,12 +246,17 @@ public final class ExplorationManager {
                 if (result == null) continue;
 
                 Location structLoc = result.getLocation();
+                double yCoord = structLoc.getY();
+                if (yCoord <= 0) {
+                    yCoord = player.getWorld().getHighestBlockYAt(structLoc.getBlockX(), structLoc.getBlockZ());
+                }
                 boolean newlyDiscovered = structureDiscoveryManager.registerDiscovery(
                     player.getUniqueId(),
                     structKey,
                     structLoc.getX(),
-                    structLoc.getY(),
-                    structLoc.getZ()
+                    yCoord,
+                    structLoc.getZ(),
+                    player.getWorld().getName()
                 );
 
                 if (newlyDiscovered) {
@@ -255,7 +265,7 @@ public final class ExplorationManager {
                     Bukkit.broadcast(MiniMessage.miniMessage().deserialize(
                         "<gold><bold>⚔ DISCOVERY! ⚔</bold></gold> " +
                         "<yellow><bold>" + player.getName() + "</bold> has discovered a physical <bold>" + formatKey(structKey) + "</bold> at " +
-                        "[" + structLoc.getBlockX() + ", " + structLoc.getBlockZ() + "]!</yellow>"
+                        "[" + structLoc.getBlockX() + ", " + (int) yCoord + ", " + structLoc.getBlockZ() + "]!</yellow>"
                     ));
                     
                     player.playSound(player.getLocation(), "ui.toast.challenge_complete", 1.0f, 1.0f);

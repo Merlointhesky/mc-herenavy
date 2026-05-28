@@ -24,6 +24,8 @@ public final class ConfigManager {
     private final Map<Integer, List<String>> levelUnlocks = new HashMap<>();
     private String rewardItem;
     private String rewardName;
+    private final Set<String> untrackedStructures = new HashSet<>();
+    private final Map<String, String> defaultIcons = new HashMap<>();
 
     public ConfigManager(HereNavyPlugin plugin) {
         this.plugin = plugin;
@@ -73,6 +75,18 @@ public final class ConfigManager {
                 }
             }
         }
+
+        // Load untracked structures
+        untrackedStructures.clear();
+        List<String> untracked = config.getStringList("untracked-structures");
+        if (untracked != null) {
+            for (String s : untracked) {
+                untrackedStructures.add(s.toLowerCase());
+            }
+        }
+
+        // Load default structure icons
+        loadDefaultIcons();
     }
 
     private void mergeMissingDefaults(java.io.File localFile, String resourcePath) {
@@ -194,5 +208,68 @@ public final class ConfigManager {
             }
         }
         return 1; // Default
+    }
+
+    /**
+     * Checks if a structure is currently tracked by the server
+     */
+    public boolean isStructureTracked(String key) {
+        return !untrackedStructures.contains(key.toLowerCase());
+    }
+
+    /**
+     * Toggles structure tracking status and persists it to config.yml
+     */
+    public void setStructureTracked(String key, boolean tracked) {
+        String normKey = key.toLowerCase();
+        if (tracked) {
+            untrackedStructures.remove(normKey);
+        } else {
+            untrackedStructures.add(normKey);
+        }
+        plugin.getConfig().set("untracked-structures", new ArrayList<>(untrackedStructures));
+        plugin.saveConfig();
+    }
+
+    /**
+     * Loads structure icons from default_icons.yml in data folder, copying it from resources if missing.
+     */
+    public void loadDefaultIcons() {
+        defaultIcons.clear();
+        java.io.File file = new java.io.File(plugin.getDataFolder(), "default_icons.yml");
+        if (!file.exists()) {
+            try {
+                plugin.saveResource("default_icons.yml", false);
+            } catch (IllegalArgumentException e) {
+                plugin.getLogger().warning("Could not save default_icons.yml resource from jar.");
+            }
+        }
+        if (file.exists()) {
+            org.bukkit.configuration.file.YamlConfiguration defaultIconsConfig = 
+                org.bukkit.configuration.file.YamlConfiguration.loadConfiguration(file);
+            ConfigurationSection iconsSection = defaultIconsConfig.getConfigurationSection("icons");
+            if (iconsSection != null) {
+                for (String key : iconsSection.getKeys(false)) {
+                    defaultIcons.put(key.toLowerCase(), iconsSection.getString(key));
+                }
+            }
+        }
+    }
+
+    /**
+     * Gets the icon URL for a structure, falling back to default_icons.yml if not set in config.yml
+     */
+    public String getStructureIcon(String structureType) {
+        if (structureType == null) return null;
+        String customUrl = plugin.getConfig().getString("bluemap.icons." + structureType);
+        if (customUrl != null && !customUrl.isEmpty()) {
+            return customUrl;
+        }
+        String normType = structureType.toLowerCase();
+        customUrl = plugin.getConfig().getString("bluemap.icons." + normType);
+        if (customUrl != null && !customUrl.isEmpty()) {
+            return customUrl;
+        }
+        return defaultIcons.get(normType);
     }
 }

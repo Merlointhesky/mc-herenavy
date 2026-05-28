@@ -5,12 +5,15 @@ import com.herenavy.herenavy.gui.ExplorerGUI;
 import com.herenavy.herenavy.navigation.NavigationManager;
 import com.herenavy.herenavy.progression.ExplorationManager;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import io.papermc.paper.event.player.AsyncChatEvent;
 import org.bukkit.inventory.ItemStack;
 
 public final class PlayerListener implements Listener {
@@ -74,6 +77,71 @@ public final class PlayerListener implements Listener {
             }
 
             configGUI.handleGUIClick(player, event.getRawSlot());
+        }
+        
+        // 3. Verify if it's the Admin Structure Tracker custom menu
+        else if (title.contains("Admin: Structure Tracker")) {
+            event.setCancelled(true);
+
+            if (event.getRawSlot() >= event.getInventory().getSize()) {
+                return;
+            }
+
+            plugin.getAdminGUI().handleGUIClick(player, event.getRawSlot());
+        }
+    }
+
+    @EventHandler
+    public void onPlayerChat(AsyncChatEvent event) {
+        Player player = event.getPlayer();
+        if (plugin.getStructureDiscoveryManager().isInNamingSession(player.getUniqueId())) {
+            event.setCancelled(true);
+            
+            // Extract plaintext from Adventure Component
+            String nameInput = PlainTextComponentSerializer.plainText().serialize(event.message()).trim();
+            
+            // Run processing on the main thread safely
+            Bukkit.getScheduler().runTask(plugin, () -> {
+                com.herenavy.herenavy.progression.StructureDiscoveryManager.StructureRecord record = 
+                        plugin.getStructureDiscoveryManager().getNamingSessionRecord(player.getUniqueId());
+                
+                if (record == null) return;
+                
+                plugin.getStructureDiscoveryManager().endNamingSession(player.getUniqueId());
+                
+                String finalName = nameInput;
+                if (finalName.equalsIgnoreCase("cancel") || finalName.equalsIgnoreCase("default") || finalName.isEmpty()) {
+                    int villageNumber = plugin.getStructureDiscoveryManager().getNextVillageNumber();
+                    finalName = "Village " + villageNumber;
+                    record.setCustomName(finalName);
+                    plugin.getStructureDiscoveryManager().saveRecord(record);
+                    
+                    player.sendMessage(MiniMessage.miniMessage().deserialize("<green>Settlement registered with the default name: </green><yellow><bold>" + finalName + "</bold></yellow>!"));
+                    player.playSound(player.getLocation(), "block.note_block.iron_xylophone", 1.0f, 1.0f);
+                } else {
+                    // Truncate length to prevent map overflow
+                    if (finalName.length() > 32) {
+                        finalName = finalName.substring(0, 32);
+                    }
+                    record.setCustomName(finalName);
+                    plugin.getStructureDiscoveryManager().saveRecord(record);
+                    
+                    player.sendMessage(MiniMessage.miniMessage().deserialize("<green>Successfully named the village to: </green><yellow><bold>" + finalName + "</bold></yellow>!"));
+                    player.playSound(player.getLocation(), "ui.toast.challenge_complete", 1.0f, 1.4f);
+                    
+                    // Broadcast the epic exploration achievement!
+                    Bukkit.broadcast(MiniMessage.miniMessage().deserialize(
+                        "<gold><bold>✍ HISTORIC NAMING! ✍</bold></gold> " +
+                        "<yellow><bold>" + player.getName() + "</bold> has named the newly discovered settlement at " +
+                        "[" + (int)record.getX() + ", " + (int)record.getY() + ", " + (int)record.getZ() + "]: <gold><bold>" + finalName + "</bold></gold>!</yellow>"
+                    ));
+                }
+                
+                // Finally, add it to BlueMap with the custom name!
+                if (plugin.getBlueMapHook() != null && plugin.getConfigManager().isStructureTracked(record.getType())) {
+                    plugin.getBlueMapHook().addMarker(record);
+                }
+            });
         }
     }
 }

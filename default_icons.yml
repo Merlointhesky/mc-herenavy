@@ -1,0 +1,36 @@
+# ==========================================
+#          HereNavy Default Icons
+# ==========================================
+# Default icon URLs served locally from https://mcmap.krobstudio.uk/icons/
+# These are packaged with the plugin and copied automatically to BlueMap web root on startup.
+
+icons:
+  "minecraft:village_plains": "https://mcmap.krobstudio.uk/icons/villager_spawn_egg.png"
+  "minecraft:village_desert": "https://mcmap.krobstudio.uk/icons/villager_spawn_egg.png"
+  "minecraft:village_savanna": "https://mcmap.krobstudio.uk/icons/villager_spawn_egg.png"
+  "minecraft:village_taiga": "https://mcmap.krobstudio.uk/icons/villager_spawn_egg.png"
+  "minecraft:village_snowy": "https://mcmap.krobstudio.uk/icons/villager_spawn_egg.png"
+  "minecraft:mineshaft": "https://mcmap.krobstudio.uk/icons/minecart.png"
+  "minecraft:mineshaft_mesa": "https://mcmap.krobstudio.uk/icons/chest_minecart.png"
+  "minecraft:swamp_hut": "https://mcmap.krobstudio.uk/icons/witch_spawn_egg.png"
+  "minecraft:igloo": "https://mcmap.krobstudio.uk/icons/stray_spawn_egg.png"
+  "minecraft:pillager_outpost": "https://mcmap.krobstudio.uk/icons/pillager_spawn_egg.png"
+  "minecraft:shipwreck": "https://mcmap.krobstudio.uk/icons/oak_boat.png"
+  "minecraft:shipwreck_beached": "https://mcmap.krobstudio.uk/icons/chest_minecart.png"
+  "minecraft:ruined_portal": "https://mcmap.krobstudio.uk/icons/zombified_piglin_spawn_egg.png"
+  "minecraft:buried_treasure": "https://mcmap.krobstudio.uk/icons/chest.png"
+  "minecraft:ocean_ruin_cold": "https://mcmap.krobstudio.uk/icons/drowned_spawn_egg.png"
+  "minecraft:ocean_ruin_warm": "https://mcmap.krobstudio.uk/icons/drowned_spawn_egg.png"
+  "minecraft:desert_pyramid": "https://mcmap.krobstudio.uk/icons/husk_spawn_egg.png"
+  "minecraft:jungle_pyramid": "https://mcmap.krobstudio.uk/icons/ocelot_spawn_egg.png"
+  "minecraft:trail_ruins": "https://mcmap.krobstudio.uk/icons/sniffer_spawn_egg.png"
+  "minecraft:fortress": "https://mcmap.krobstudio.uk/icons/blaze_spawn_egg.png"
+  "minecraft:ruined_portal_nether": "https://mcmap.krobstudio.uk/icons/zombified_piglin_spawn_egg.png"
+  "minecraft:monument": "https://mcmap.krobstudio.uk/icons/elder_guardian_spawn_egg.png"
+  "minecraft:mansion": "https://mcmap.krobstudio.uk/icons/evoker_spawn_egg.png"
+  "minecraft:trial_chambers": "https://mcmap.krobstudio.uk/icons/breeze_spawn_egg.png"
+  "minecraft:nether_fossil": "https://mcmap.krobstudio.uk/icons/wither_skeleton_spawn_egg.png"
+  "minecraft:bastion_remnant": "https://mcmap.krobstudio.uk/icons/piglin_brute_spawn_egg.png"
+  "minecraft:stronghold": "https://mcmap.krobstudio.uk/icons/eye_of_ender.png"
+  "minecraft:ancient_city": "https://mcmap.krobstudio.uk/icons/warden_spawn_egg.png"
+  "minecraft:end_city": "https://mcmap.krobstudio.uk/icons/shulker_spawn_egg.png"

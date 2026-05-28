@@ -31,6 +31,23 @@ A premium [Paper](https://papermc.io) Minecraft plugin for **RPG-style Explorati
   - **Shiny Particle Trails**: Spawns a stream of guiding particles (cyan/green magic sparkles) that fly forward in the physical direction of your targeted landmark.
   - **Four Configurable Visual Styles**: Choose between Compass-Only, Arrow-Only, Trail-Only, or Combined displays via configuration.
 
+- **BlueMap Web Map Integration**:
+  - Automatically places persistent global markers on the BlueMap 3D web map whenever a brand-new physical structure is discovered.
+  - **Segregated MarkerSets**: Symmetrically maps and separates landmarks across dimensional maps (Overworld, Nether, End), ensuring correct dimension tracking.
+  - **Dynamic Groupings**: Clusters matching structures under categorized marker sets (e.g. Plains, Desert, Snowy Villages are grouped under a single toggleable `"Villages"` set on the map).
+  - **Clear Landmark Labels**: Markers are registered with unique IDs (`hn-marker-<uuid>`) and descriptive coordinate-appended titles (e.g., `Plains Village [-240, 1800]`).
+
+- **BMarker Support (Solid 16x16 EntitySprites)**:
+  - If **BMarker** (BlueMap Marker Manager) is installed, markers are rendered using beautiful, high-contrast **16x16 solid square EntitySprite head textures** loaded from the Minecraft Wiki (e.g., Warden head for Ancient Cities, Villager head for Villages, Blaze head for Nether Fortresses).
+  - Solid background frames prevent transparency from getting lost on the web map terrain.
+  - Uses configured anchor offsets (`16, 16`) for absolute pinpoint map accuracy.
+
+- **Admin Structure Tracking GUI (`/hn admin`)**:
+  - Administrators can execute `/hn admin` to open a premium 54-slot chest GUI listing all 28 structures.
+  - Toggling tracking states is real-time: active tracked structures glow green (`✔ TRACKED`), and untracked ones show red warning blocks (`❌ NOT TRACKED`).
+  - Disabling a structure dynamically filters it out from the players' Landmarks GUI, suspends active chunk boundary scanning in the 20-tick exploration loop, and stops BlueMap registrations.
+  - Choices automatically persist to `config.yml` under `untracked-structures`.
+
 - **Advanced Structure-Centric Database**:
   - Organizes world structures under `plugins/HereNavy/structures/[structure-type]/[uuid].yml`.
   - Records the exact physical location of each structure and holds a **shared list of players** who have successfully discovered it, preventing duplicate structure generation configurations in multiplayer environments.
@@ -52,6 +69,7 @@ All commands can be run with `/hn` or `/explore` instead of `/herenavy`.
 | `/hn stop` | Cancels any active navigation target | `herenavy.use` |
 | `/hn info` | Displays your current Exploration Level, EXP, and progression status | `herenavy.use` |
 | `/hn go <x> <y> <z>` | Starts manual coordinates navigation (Arrival-only, no EXP rewards) | `herenavy.use` |
+| `/hn admin` | Opens the Admin Structure Tracking Dashboard GUI | `herenavy.admin` |
 
 ---
 
@@ -60,6 +78,7 @@ All commands can be run with `/hn` or `/explore` instead of `/herenavy`.
 | Permission | Description | Default |
 |------------|-------------|---------|
 | `herenavy.use` | Allows full access to all /hn commands and navigation menus | `true` |
+| `herenavy.admin` | Allows full access to HereNavy admin commands and tracking GUI | `op` |
 
 ---
 

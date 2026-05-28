@@ -324,12 +324,20 @@ public final class ExplorerGUI {
         // Return Button in bottom-middle (slot 49)
         inv.setItem(49, getBackItem());
 
+        // Filter out untracked structures
+        List<POIEntry> activeStructures = new ArrayList<>();
+        for (POIEntry entry : structureEntries) {
+            if (configManager.isStructureTracked(entry.getKey())) {
+                activeStructures.add(entry);
+            }
+        }
+
         // Fill structures
         int structIndex = 0;
         for (int row = 1; row <= 4; row++) {
             for (int col = 1; col <= 7; col++) {
-                if (structIndex < structureEntries.size()) {
-                    POIEntry entry = structureEntries.get(structIndex++);
+                if (structIndex < activeStructures.size()) {
+                    POIEntry entry = activeStructures.get(structIndex++);
                     int reqLvl = configManager.getRequiredLevel(entry.getKey());
                     boolean unlocked = lvl >= reqLvl;
                     boolean completed = plugin.getStructureDiscoveryManager()

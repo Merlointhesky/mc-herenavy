@@ -21,6 +21,8 @@ public final class HereNavyPlugin extends JavaPlugin {
     private ArrowManager arrowManager;
     private ExplorerGUI explorerGUI;
     private com.herenavy.herenavy.gui.ConfigGUI configGUI;
+    private com.herenavy.herenavy.gui.AdminGUI adminGUI;
+    private com.herenavy.herenavy.integration.BlueMapHook blueMapHook;
 
     @Override
     public void onEnable() {
@@ -36,6 +38,12 @@ public final class HereNavyPlugin extends JavaPlugin {
         this.navigationManager = new NavigationManager(this, structureDiscoveryManager, arrowManager);
         this.explorerGUI = new ExplorerGUI(this, configManager, explorationManager, navigationManager);
         this.configGUI = new com.herenavy.herenavy.gui.ConfigGUI(this, explorationManager);
+        this.adminGUI = new com.herenavy.herenavy.gui.AdminGUI(this);
+        
+        // Load BlueMap optional integration hook safely if installed and enabled
+        if (getServer().getPluginManager().isPluginEnabled("BlueMap") && getConfig().getBoolean("bluemap.enabled", true)) {
+            this.blueMapHook = new com.herenavy.herenavy.integration.BlueMapHook(this);
+        }
 
         // Startup Progression loops (e.g. 20-tick discovery tasks)
         explorationManager.startTasks();
@@ -96,5 +104,13 @@ public final class HereNavyPlugin extends JavaPlugin {
 
     public com.herenavy.herenavy.gui.ConfigGUI getConfigGUI() {
         return configGUI;
+    }
+
+    public com.herenavy.herenavy.gui.AdminGUI getAdminGUI() {
+        return adminGUI;
+    }
+
+    public com.herenavy.herenavy.integration.BlueMapHook getBlueMapHook() {
+        return blueMapHook;
     }
 }
