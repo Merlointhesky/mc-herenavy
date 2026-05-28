@@ -106,7 +106,7 @@ bluemap:
   # - "https://minecraft.wiki/w/Special:FilePath/" - Loads official high-quality icons directly from the Minecraft Wiki.
   # - "https://mcmap.krobstudio.uk/icons/" - Krobstudio custom high-resolution server icons.
   # - "icons/" - Locally copied icons served by BlueMap relative to its web root.
-  icon-base-url: "https://minecraft.wiki/w/Special:FilePath/"
+  icon-base-url: "https://mcmap.krobstudio.uk/icons/"
   # Configure custom marker sets. Structures mapped to the same ID will be grouped together.
   # If a structure is not listed here, it will automatically fall back to its own formatted set name.
   marker-sets:
@@ -146,35 +146,35 @@ bluemap:
   # Loaded automatically from default_icons.yml if missing or empty here.
   # Leave empty or specify custom URLs/filenames here to override default icons.
   icons:
-    "minecraft:village_plains": "Oak_Planks.png"
-    "minecraft:village_desert": "Sandstone.png"
-    "minecraft:village_savanna": "Acacia_Planks.png"
-    "minecraft:village_taiga": "Spruce_Planks.png"
-    "minecraft:village_snowy": "Snow_Block.png"
-    "minecraft:mineshaft": "Minecart.png"
-    "minecraft:mineshaft_mesa": "Minecart_with_Chest.png"
-    "minecraft:swamp_hut": "Cauldron.png"
-    "minecraft:igloo": "Packed_Ice.png"
-    "minecraft:pillager_outpost": "Ominous_Banner_JE2_BE2.png"
-    "minecraft:shipwreck": "Oak_Boat.png"
-    "minecraft:shipwreck_beached": "Chest.png"
-    "minecraft:ruined_portal": "Crying_Obsidian.png"
-    "minecraft:buried_treasure": "Heart_of_the_Sea.png"
-    "minecraft:ocean_ruin_cold": "Prismarine_Bricks.png"
-    "minecraft:ocean_ruin_warm": "Sniffer_Egg.png"
-    "minecraft:desert_pyramid": "Chiseled_Sandstone.png"
-    "minecraft:jungle_pyramid": "Mossy_Cobblestone.png"
-    "minecraft:trail_ruins": "Suspicious_Gravel_JE1_BE1.png"
-    "minecraft:fortress": "Nether_Bricks.png"
-    "minecraft:ruined_portal_nether": "Crying_Obsidian.png"
-    "minecraft:monument": "Dark_Prismarine.png"
-    "minecraft:mansion": "Totem_of_Undying.png"
-    "minecraft:trial_chambers": "Trial_Key.png"
-    "minecraft:nether_fossil": "Bone_Block.png"
-    "minecraft:bastion_remnant": "Gilded_Blackstone.png"
-    "minecraft:stronghold": "Eye_of_Ender.png"
-    "minecraft:ancient_city": "Sculk_Catalyst.png"
-    "minecraft:end_city": "Purpur_Block.png"
+    "minecraft:village_plains": "block/oak_planks.png"
+    "minecraft:village_desert": "block/sandstone.png"
+    "minecraft:village_savanna": "block/acacia_planks.png"
+    "minecraft:village_taiga": "block/spruce_planks.png"
+    "minecraft:village_snowy": "block/snow.png"
+    "minecraft:mineshaft": "item/minecart.png"
+    "minecraft:mineshaft_mesa": "item/chest_minecart.png"
+    "minecraft:swamp_hut": "item/cauldron.png"
+    "minecraft:igloo": "block/packed_ice.png"
+    "minecraft:pillager_outpost": "item/ominous_bottle.png"
+    "minecraft:shipwreck": "item/oak_boat.png"
+    "minecraft:shipwreck_beached": "chest.png"
+    "minecraft:ruined_portal": "block/crying_obsidian.png"
+    "minecraft:buried_treasure": "item/heart_of_the_sea.png"
+    "minecraft:ocean_ruin_cold": "block/prismarine_bricks.png"
+    "minecraft:ocean_ruin_warm": "item/sniffer_egg.png"
+    "minecraft:desert_pyramid": "block/chiseled_sandstone.png"
+    "minecraft:jungle_pyramid": "block/mossy_cobblestone.png"
+    "minecraft:trail_ruins": "block/suspicious_gravel_0.png"
+    "minecraft:fortress": "block/nether_bricks.png"
+    "minecraft:ruined_portal_nether": "block/crying_obsidian.png"
+    "minecraft:monument": "block/dark_prismarine.png"
+    "minecraft:mansion": "item/totem_of_undying.png"
+    "minecraft:trial_chambers": "item/trial_key.png"
+    "minecraft:nether_fossil": "block/bone_block_side.png"
+    "minecraft:bastion_remnant": "block/gilded_blackstone.png"
+    "minecraft:stronghold": "item/ender_eye.png"
+    "minecraft:ancient_city": "block/sculk_catalyst_top.png"
+    "minecraft:end_city": "block/purpur_block.png"
 
 # -- Admin Custom Controls --
 # Holds list of structures disabled by administration (admin GUI toggles)

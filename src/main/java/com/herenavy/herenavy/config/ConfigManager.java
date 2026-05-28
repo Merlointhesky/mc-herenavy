@@ -261,15 +261,35 @@ public final class ConfigManager {
      */
     public String getStructureIcon(String structureType) {
         if (structureType == null) return null;
+        String iconPath = null;
+        
         String customUrl = plugin.getConfig().getString("bluemap.icons." + structureType);
         if (customUrl != null && !customUrl.isEmpty()) {
-            return customUrl;
+            iconPath = customUrl;
+        } else {
+            String normType = structureType.toLowerCase();
+            customUrl = plugin.getConfig().getString("bluemap.icons." + normType);
+            if (customUrl != null && !customUrl.isEmpty()) {
+                iconPath = customUrl;
+            } else {
+                iconPath = defaultIcons.get(normType);
+            }
         }
-        String normType = structureType.toLowerCase();
-        customUrl = plugin.getConfig().getString("bluemap.icons." + normType);
-        if (customUrl != null && !customUrl.isEmpty()) {
-            return customUrl;
+
+        if (iconPath == null || iconPath.isEmpty()) {
+            return null;
         }
-        return defaultIcons.get(normType);
+
+        // If it's already a full URL, return it directly
+        if (iconPath.startsWith("http://") || iconPath.startsWith("https://")) {
+            return iconPath;
+        }
+
+        // Prepend the configured base URL (falls back to Minecraft Wiki's file path redirect service)
+        String baseUrl = plugin.getConfig().getString("bluemap.icon-base-url", "https://minecraft.wiki/w/Special:FilePath/");
+        if (baseUrl == null) {
+            baseUrl = "";
+        }
+        return baseUrl + iconPath;
     }
 }
