@@ -246,10 +246,14 @@ public final class ExplorationManager {
                 if (result == null) continue;
 
                 Location structLoc = result.getLocation();
-                double yCoord = structLoc.getY();
-                if (yCoord <= 0) {
-                    yCoord = player.getWorld().getHighestBlockYAt(structLoc.getBlockX(), structLoc.getBlockZ());
-                }
+                 double yCoord = structLoc.getY();
+                 if (yCoord <= 0) {
+                     if (player.getWorld().getEnvironment() == org.bukkit.World.Environment.NETHER) {
+                         yCoord = 64; // Default safe height for Nether structures to avoid ceiling Y=127
+                     } else {
+                         yCoord = player.getWorld().getHighestBlockYAt(structLoc.getBlockX(), structLoc.getBlockZ());
+                     }
+                 }
                 boolean newlyDiscovered = structureDiscoveryManager.registerDiscovery(
                     player.getUniqueId(),
                     structKey,

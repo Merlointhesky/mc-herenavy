@@ -133,7 +133,7 @@ public final class BlueMapHook {
     public void addMarker(StructureRecord record, boolean forceUpdate) {
         BlueMapAPI.getInstance().ifPresent(api -> {
             String worldName = record.getWorldName();
-            if (worldName == null || worldName.isEmpty()) {
+            if (worldName == null || worldName.isEmpty() || worldName.equalsIgnoreCase("null")) {
                 worldName = inferWorldFromStructureType(record.getType());
             }
 
@@ -154,8 +154,48 @@ public final class BlueMapHook {
             for (BlueMapMap map : api.getMaps()) {
                 String mapWorldName = map.getWorld().getSaveFolder().getFileName().toString();
                 
-                // Symmetrical dimensional mapping: match world name to the map's world name or map ID
-                if (mapWorldName.equalsIgnoreCase(worldName) || map.getId().contains(worldName)) {
+                // Symmetrical dimensional mapping: match world name to the map's world name or map ID safely
+                boolean isMatch = false;
+                
+                // Determine Marker Dimension
+                String markerDim = "normal";
+                org.bukkit.World markerWorld = Bukkit.getWorld(worldName);
+                if (markerWorld != null) {
+                    if (markerWorld.getEnvironment() == org.bukkit.World.Environment.NETHER) {
+                        markerDim = "nether";
+                    } else if (markerWorld.getEnvironment() == org.bukkit.World.Environment.THE_END) {
+                        markerDim = "end";
+                    }
+                } else {
+                    if (worldName.toLowerCase().contains("nether")) {
+                        markerDim = "nether";
+                    } else if (worldName.toLowerCase().contains("end")) {
+                        markerDim = "end";
+                    }
+                }
+                
+                // Determine Map Dimension
+                String mapDim = "normal";
+                if (map.getId().toLowerCase().contains("nether") || mapWorldName.toLowerCase().contains("nether")) {
+                    mapDim = "nether";
+                } else if (map.getId().toLowerCase().contains("end") || mapWorldName.toLowerCase().contains("end")) {
+                    mapDim = "end";
+                }
+                
+                // Dimensions must match
+                if (markerDim.equals(mapDim)) {
+                    // Check if base names match to support multi-world environments correctly (e.g. survival vs creative)
+                    String markerBase = getBaseWorldName(worldName);
+                    String mapWorldBase = getBaseWorldName(mapWorldName);
+                    String mapIdBase = getBaseWorldName(map.getId());
+                    
+                    if (markerBase.equalsIgnoreCase(mapWorldBase) || markerBase.equalsIgnoreCase(mapIdBase) 
+                            || mapWorldName.equalsIgnoreCase(worldName) || map.getId().equalsIgnoreCase(worldName)) {
+                        isMatch = true;
+                    }
+                }
+
+                if (isMatch) {
                     String mapId = map.getId();
                     String cacheKey = mapId + "_" + markerSetId;
 
@@ -186,13 +226,17 @@ public final class BlueMapHook {
                     }
                     
                     double y = record.getY();
-                    if (y <= 0) {
+                    boolean isNether = worldName.toLowerCase().contains("nether") 
+                            || (Bukkit.getWorld(worldName) != null && Bukkit.getWorld(worldName).getEnvironment() == org.bukkit.World.Environment.NETHER);
+                    
+                    if (y <= 0 || (isNether && y == 127)) {
                         org.bukkit.World bukkitWorld = Bukkit.getWorld(worldName);
-                        if (bukkitWorld != null) {
+                        if (bukkitWorld != null && bukkitWorld.getEnvironment() == org.bukkit.World.Environment.NETHER) {
+                            y = 64; // Nether structures should default to Y 64 to avoid roof
+                        } else if (bukkitWorld != null) {
                             y = bukkitWorld.getHighestBlockYAt((int) record.getX(), (int) record.getZ());
-                        }
-                        if (y <= 0) {
-                            y = 64; // Safe default sea level height
+                        } else {
+                            y = 64; // Safe fallback
                         }
                     }
 
@@ -223,12 +267,41 @@ public final class BlueMapHook {
      */
     private String inferWorldFromStructureType(String type) {
         String lower = type.toLowerCase();
+        org.bukkit.World.Environment targetEnv = org.bukkit.World.Environment.NORMAL;
         if (lower.contains("fortress") || lower.contains("bastion") || lower.contains("nether")) {
-            return "world_nether";
+            targetEnv = org.bukkit.World.Environment.NETHER;
         } else if (lower.contains("end")) {
+            targetEnv = org.bukkit.World.Environment.THE_END;
+        }
+
+        for (org.bukkit.World world : Bukkit.getWorlds()) {
+            if (world.getEnvironment() == targetEnv) {
+                return world.getName();
+            }
+        }
+        
+        // Fallback to default Minecraft names if environment isn't found
+        if (targetEnv == org.bukkit.World.Environment.NETHER) {
+            return "world_nether";
+        } else if (targetEnv == org.bukkit.World.Environment.THE_END) {
             return "world_the_end";
         }
         return "world";
+    }
+
+    /**
+     * Extracts the base world name by stripping out dimension suffixes (e.g., nether, the_nether, end, the_end)
+     */
+    private String getBaseWorldName(String name) {
+        if (name == null) return "";
+        String lower = name.toLowerCase();
+        lower = lower.replace("the_nether", "")
+                     .replace("nether", "")
+                     .replace("the_end", "")
+                     .replace("end", "");
+        // Remove trailing/leading underscores or hyphens
+        lower = lower.replaceAll("^[_\\-]+|[_\\-]+$", "");
+        return lower;
     }
 
     private String getCleanSlug(String type) {
