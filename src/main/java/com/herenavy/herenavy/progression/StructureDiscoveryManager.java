@@ -118,6 +118,15 @@ public final class StructureDiscoveryManager {
     }
 
     /**
+     * Adds a structure record to the memory cache and saves it to files.
+     */
+    public void addStructureRecord(StructureRecord record) {
+        Map<UUID, StructureRecord> typeCache = cache.computeIfAbsent(record.getType(), k -> new HashMap<>());
+        typeCache.put(record.getId(), record);
+        saveRecord(record);
+    }
+
+    /**
      * Saves a record to its YAML file
      */
     public void saveRecord(StructureRecord record) {

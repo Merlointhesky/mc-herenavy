@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import io.papermc.paper.event.player.AsyncChatEvent;
@@ -88,6 +89,15 @@ public final class PlayerListener implements Listener {
             }
 
             plugin.getAdminGUI().handleGUIClick(player, event.getRawSlot());
+        }
+    }
+
+    @EventHandler
+    public void onInventoryDrag(InventoryDragEvent event) {
+        String title = MiniMessage.miniMessage().serialize(event.getView().title());
+        if (title.contains("Cartography Map") || title.contains("Biomes Map") || title.contains("Landmarks Map") ||
+            title.contains("Navigation Settings") || title.contains("Admin: Structure Tracker")) {
+            event.setCancelled(true);
         }
     }
 

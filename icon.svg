@@ -50,65 +50,106 @@
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient7789"
-       id="linearGradient7793"
-       x1="-228.72572"
-       y1="131.89816"
-       x2="-125.63092"
-       y2="131.89816"
+       id="linearGradient7793-7"
+       x1="-216.69411"
+       y1="74.939438"
+       x2="-215.40524"
+       y2="161.96954"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="translate(282.28009,8.8445219)" />
+       gradientTransform="matrix(0.43065946,0,0,0.43065945,131.75995,61.999318)" />
   </defs>
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill:#ffffff;stroke-width:9.498;stroke-linejoin:round;fill-opacity:1;stroke:#0000a5;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
-       id="rect7284"
+       style="fill:#f8f9fa;fill-opacity:1;stroke:none;stroke-width:9.498;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3279"
        width="180"
        height="180"
-       x="16.518356"
-       y="30.724142"
+       x="6.7975507"
+       y="5.8064485"
+       ry="27.943546"
+       inkscape:export-filename="D:\Development\Java\Minecraft Mods\HereNavy\icon.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <image
+       width="180"
+       height="138.7317"
+       preserveAspectRatio="none"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAM0AAACeCAYAAACRpo4wAAAABHNCSVQICAgIfAhkiAAAA6hJREFU
+eJzt3TFrnmUUgOFUugqSVf0FHcVNEKwUVBCKtIM4ieBqHFyL4OQSxwqaLqJgbCtCq0MrKAUHU6SF
+oi6SYhWnUOmiLjoKgnDu+tok5LrmQ/IlcPMMz3nf79Bvv//x5wowdt9ufwDYb0QDkWggEg1EooFI
+NBCJBiLRQCQaiEQDkWggEg1EooFINBCJBiLRQCQaiEQDkWggEg1Eh3f7A9CcP//soj/v+PFPFv15
+B4GTBiLRQCQaiEQDkWggEg1EooFINBCJBqJDvmpjb5je9B994tRo7vadH0dzV7/eGM3ZHPibkwYi
+0UAkGohEA5FoIBINRKKBSDQQiQYiGwF3aeln9c+c/nk0d/HSlUV/787OjdHc5c9fH80dhM0BJw1E
+ooFINBCJBiLRQCQaiEQDkWggEg1ENgL+Yeln9VdXj4zmnn7ysdHc1NKbAz/c/Gw0d3ZzfTS3tvbF
+f/k4u8pJA5FoIBINRKKBSDQQiQYi0UAkGohEA9G+3whY+ln9Rx59cTR34dz10dz1a9+M5n66NXvL
+/yuvzZ7VP3bs6GhuaZsfnRzNbW//Oprbi5sDThqIRAORaCASDUSigUg0EIkGItFAJBqIDu/2B/g3
+05v+6dv23/vw7dHc1tYvo7lPL8zejr/0Df7S7xJYenNgulGxsrIxmlpff3w0dy83B5w0EIkGItFA
+JBqIRAORaCASDUSigUg0EN3zjYDpTf/0ZvnM6TdGcy+cfHk09+BDD4/mnnpm9nfs2rP6778zmlv6
+8z1w/+z/5x0BcICIBiLRQCQaiEQDkWggEg1EooFINBDt2W8NmD4b/tyJtdHc9KZ6ujlw8dKV0dzS
+z/RPf+/Uzs6N0dztO7NvNTi7uT6a24s3/VNOGohEA5FoIBINRKKBSDQQiQYi0UAkGoj27EbA1NKb
+A+c+mN1Uf//d9mjuxPMvjebeevPUaG66ETC96X9349XR3NR+vumfctJAJBqIRAORaCASDUSigUg0
+EIkGItFAtO83AqZ2650Dq6tHRnPTG/xr3348mtv66svR3EG4wV+akwYi0UAkGohEA5FoIBINRKKB
+SDQQiQaiA7MRMLX05sDNW1dHc9Mb/Ck3/f8fJw1EooFINBCJBiLRQCQaiEQDkWggEg1ENgLu0nRz
+YMoN/v7hpIFINBCJBiLRQCQaiEQDkWggEg1EooHIRgBEThqIRAORaCASDUSigUg0EIkGItFAJBqI
+RAORaCASDUSigUg0EIkGItFA9BcYN79kOVce6gAAAABJRU5ErkJggg==
+"
+       id="image92602"
+       x="6.7975507"
+       y="20.093863"
+       inkscape:export-filename="D:\Development\Java\Minecraft Mods\HereNavy\icon.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#878839;stroke-width:9.498;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect7284-6"
+       width="180"
+       height="180"
+       x="6.7975507"
+       y="5.8064485"
        ry="27.943546"
        inkscape:export-filename="D:\Development\Java\Minecraft Mods\HereNavy\icon.png"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96" />
     <path
-       id="rect7366"
-       style="fill:#000083;fill-opacity:0.4375;stroke-width:0.43234;stroke-linejoin:round"
-       d="m 53.381886,104.5473 c -15.480728,0 -27.943518,9.40671 -27.943518,21.09129 v 31.23558 H 158.99402 c 15.48074,0 27.94352,-9.4067 27.94352,-21.09129 v -30.00655 c -2.94756,-0.79396 -6.12505,-1.22903 -9.44282,-1.22903 z"
+       id="rect7366-7"
+       style="fill:#ff9000;fill-opacity:0.11413;stroke:none;stroke-width:0.43234;stroke-linejoin:round;stroke-opacity:1"
+       d="m 44.985444,13.947998 c -15.48072,0 -27.94351,9.40671 -27.94351,21.09129 v 31.23558 H 150.5976 c 15.48074,0 27.65024,-7.75855 27.94352,-21.09129 v -13.15783 c 0,0 -2.16065,-14.11335 -19.6842,-18.07775 z"
        inkscape:export-filename="D:\Development\Java\Minecraft Mods\HereNavy\icon.png"
        inkscape:export-xdpi="96"
-       inkscape:export-ydpi="96" />
+       inkscape:export-ydpi="96"
+       sodipodi:nodetypes="sscscccs" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:163.673px;line-height:1.25;font-family:sans-serif;fill:url(#linearGradient7793);fill-opacity:1;stroke:none;stroke-width:4.09184"
-       x="50.517456"
-       y="195.28703"
-       id="text2436"
-       transform="scale(1.0708721,0.93381835)"
+       style="font-style:normal;font-weight:normal;font-size:70.4874px;line-height:1.25;font-family:sans-serif;fill:url(#linearGradient7793-7);fill-opacity:1;stroke:none;stroke-width:1.76218"
+       x="31.949169"
+       y="142.29259"
+       id="text2436-2"
+       transform="scale(0.79886772,1.2517717)"
        inkscape:export-filename="D:\Development\Java\Minecraft Mods\HereNavy\icon.png"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96"><tspan
          sodipodi:role="line"
-         id="tspan2434"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Eras Bold ITC';-inkscape-font-specification:'Eras Bold ITC';fill:url(#linearGradient7793);fill-opacity:1;stroke-width:4.09184"
-         x="50.517456"
-         y="195.28703">H</tspan></text>
+         id="tspan2434-1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Eras Bold ITC';-inkscape-font-specification:'Eras Bold ITC';fill:url(#linearGradient7793-7);fill-opacity:1;stroke-width:1.76218"
+         x="31.949169"
+         y="142.29259">HN</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:163.673px;line-height:1.25;font-family:sans-serif;fill:#ffc400;fill-opacity:1;stroke:none;stroke-width:4.09184"
-       x="27.99674"
-       y="191.04166"
-       id="text7206"
-       transform="scale(1.0708721,0.93381834)"
+       style="font-style:normal;font-weight:normal;font-size:70.4874px;line-height:1.25;font-family:sans-serif;fill:#ffc400;fill-opacity:1;stroke:none;stroke-width:1.76218"
+       x="24.48753"
+       y="138.86592"
+       id="text7206-1"
+       transform="scale(0.79886772,1.2517717)"
        inkscape:export-filename="D:\Development\Java\Minecraft Mods\HereNavy\icon.png"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96"><tspan
          sodipodi:role="line"
-         id="tspan7204"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Eras Bold ITC';-inkscape-font-specification:'Eras Bold ITC';fill:#ffc400;stroke-width:4.09184;fill-opacity:1"
-         x="27.99674"
-         y="191.04166">H</tspan></text>
+         id="tspan7204-3"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Eras Bold ITC';-inkscape-font-specification:'Eras Bold ITC';fill:#ffc400;fill-opacity:1;stroke-width:1.76218"
+         x="24.48753"
+         y="138.86592">HN</tspan></text>
   </g>
 </svg>

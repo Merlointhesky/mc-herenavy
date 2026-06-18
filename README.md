@@ -36,6 +36,7 @@ A premium [Paper](https://papermc.io) Minecraft plugin for **RPG-style Explorati
   - **Segregated MarkerSets**: Symmetrically maps and separates landmarks across dimensional maps (Overworld, Nether, End), ensuring correct dimension tracking.
   - **Dynamic Groupings**: Clusters matching structures under categorized marker sets (e.g. Plains, Desert, Snowy Villages are grouped under a single toggleable `"Villages"` set on the map).
   - **Clear Landmark Labels**: Markers are registered with unique IDs (`hn-marker-<uuid>`) and descriptive coordinate-appended titles (e.g., `Plains Village [-240, 1800]`).
+  - **Towny Marker Delegation**: Exposes a direct, decoupled plugin API (`HereNavyAPI`) which allows compatible town-progression plugins (such as `HereTowny`) to delegate town marker creation and updates to `HereNavy`. This replaces generic POI icons with `HereNavy`'s nice custom village icons and utilizes player-defined town names dynamically.
 
 - **BMarker Support (Solid 16x16 EntitySprites)**:
   - If **BMarker** (BlueMap Marker Manager) is installed, markers are rendered using beautiful, high-contrast **16x16 solid square EntitySprite head textures** loaded from the Minecraft Wiki (e.g., Warden head for Ancient Cities, Villager head for Villages, Blaze head for Nether Fortresses).

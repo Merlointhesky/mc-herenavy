@@ -40,6 +40,9 @@ public final class HereNavyPlugin extends JavaPlugin {
         this.configGUI = new com.herenavy.herenavy.gui.ConfigGUI(this, explorationManager);
         this.adminGUI = new com.herenavy.herenavy.gui.AdminGUI(this);
         
+        // Initialize API
+        com.herenavy.herenavy.api.HereNavyAPI.setInstance(new com.herenavy.herenavy.api.HereNavyAPI(this));
+        
         // Load BlueMap optional integration hook safely if installed and enabled
         if (getServer().getPluginManager().isPluginEnabled("BlueMap") && getConfig().getBoolean("bluemap.enabled", true)) {
             this.blueMapHook = new com.herenavy.herenavy.integration.BlueMapHook(this);
