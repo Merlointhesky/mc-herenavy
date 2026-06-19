@@ -40,7 +40,11 @@ public final class HereNavyAPI {
             double bestDistSq = 14400.0; // 120 blocks
             StructureRecord closest = null;
             for (StructureRecord record : plugin.getStructureDiscoveryManager().getAllStructures()) {
-                if (record.getType().toLowerCase().contains("village") && record.getWorldName() != null && record.getWorldName().equals(loc.getWorld().getName())) {
+                if (record.getType().toLowerCase().contains("village")) {
+                    String rWorld = record.getWorldName();
+                    if (rWorld != null && !rWorld.isEmpty() && !rWorld.equalsIgnoreCase("null") && !rWorld.equals(loc.getWorld().getName())) {
+                        continue;
+                    }
                     double dx = record.getX() - loc.getX();
                     double dz = record.getZ() - loc.getZ();
                     double distSq = dx * dx + dz * dz;
@@ -52,8 +56,24 @@ public final class HereNavyAPI {
             }
 
             if (closest != null) {
-                closest.setCustomName(townName);
-                plugin.getStructureDiscoveryManager().saveRecord(closest);
+                String rWorld = closest.getWorldName();
+                if (rWorld == null || rWorld.isEmpty() || rWorld.equalsIgnoreCase("null") || closest.getY() <= 0.0) {
+                    StructureRecord upgraded = new StructureRecord(
+                        closest.getId(),
+                        closest.getType(),
+                        closest.getX(),
+                        loc.getY(),
+                        closest.getZ(),
+                        loc.getWorld().getName(),
+                        townName,
+                        closest.getDiscoveredPlayers()
+                    );
+                    plugin.getStructureDiscoveryManager().addStructureRecord(upgraded);
+                    closest = upgraded;
+                } else {
+                    closest.setCustomName(townName);
+                    plugin.getStructureDiscoveryManager().saveRecord(closest);
+                }
                 if (plugin.getBlueMapHook() != null) {
                     plugin.getBlueMapHook().addMarker(closest, true);
                 }

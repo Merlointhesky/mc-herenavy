@@ -110,6 +110,18 @@ public final class BlueMapHook {
     private void registerAllExistingMarkers(BlueMapAPI api) {
         segregatedMarkerSets.clear();
 
+        // Clear existing markers from BlueMap's marker sets to prevent ghost/deleted markers
+        for (BlueMapMap map : api.getMaps()) {
+            for (String setId : new ArrayList<>(map.getMarkerSets().keySet())) {
+                if (setId.startsWith("hn-set-")) {
+                    MarkerSet set = map.getMarkerSets().get(setId);
+                    if (set != null) {
+                        set.getMarkers().clear();
+                    }
+                }
+            }
+        }
+
         List<StructureRecord> allRecords = plugin.getStructureDiscoveryManager().getAllStructures();
         for (StructureRecord record : allRecords) {
             // Only add if tracking is enabled by administration
@@ -202,13 +214,16 @@ public final class BlueMapHook {
                     // Get or create a separate/segregated MarkerSet for this specific map!
                     MarkerSet markerSet = segregatedMarkerSets.get(cacheKey);
                     if (markerSet == null) {
-                        markerSet = MarkerSet.builder()
-                                .label(setLabel)
-                                .toggleable(true)
-                                .defaultHidden(false)
-                                .build();
-                        
-                        map.getMarkerSets().put(markerSetId, markerSet);
+                        markerSet = map.getMarkerSets().get(markerSetId);
+                        if (markerSet == null) {
+                            markerSet = MarkerSet.builder()
+                                    .label(setLabel)
+                                    .toggleable(true)
+                                    .defaultHidden(false)
+                                    .build();
+                            
+                            map.getMarkerSets().put(markerSetId, markerSet);
+                        }
                         segregatedMarkerSets.put(cacheKey, markerSet);
                     }
 

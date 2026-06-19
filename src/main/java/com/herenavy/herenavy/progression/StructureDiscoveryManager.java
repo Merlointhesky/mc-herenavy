@@ -108,6 +108,101 @@ public final class StructureDiscoveryManager {
                 }
             }
         }
+        deduplicateStructures();
+    }
+
+    private void deduplicateStructures() {
+        for (String type : new ArrayList<>(cache.keySet())) {
+            Map<UUID, StructureRecord> typeCache = cache.get(type);
+            if (typeCache == null || typeCache.size() <= 1) continue;
+
+            List<StructureRecord> records = new ArrayList<>(typeCache.values());
+            Set<UUID> removedIds = new HashSet<>();
+
+            for (int i = 0; i < records.size(); i++) {
+                StructureRecord r1 = records.get(i);
+                if (removedIds.contains(r1.getId())) continue;
+
+                for (int j = i + 1; j < records.size(); j++) {
+                    StructureRecord r2 = records.get(j);
+                    if (removedIds.contains(r2.getId())) continue;
+
+                    // If coordinates are very close (within 20 blocks in 2D space)
+                    double dx = r1.getX() - r2.getX();
+                    double dz = r1.getZ() - r2.getZ();
+                    if (dx * dx + dz * dz < 400.0) {
+                        // Merge them!
+                        StructureRecord better = r1;
+                        StructureRecord worse = r2;
+
+                        boolean r1HasName = r1.getCustomName() != null && !r1.getCustomName().isEmpty();
+                        boolean r2HasName = r2.getCustomName() != null && !r2.getCustomName().isEmpty();
+                        boolean r1HasWorld = r1.getWorldName() != null && !r1.getWorldName().isEmpty() && !r1.getWorldName().equals("null");
+                        boolean r2HasWorld = r2.getWorldName() != null && !r2.getWorldName().isEmpty() && !r2.getWorldName().equals("null");
+
+                        if (r2HasName && !r1HasName) {
+                            better = r2;
+                            worse = r1;
+                        } else if (r2HasWorld && !r1HasWorld) {
+                            better = r2;
+                            worse = r1;
+                        } else if (r2.getY() > 0.0 && r1.getY() <= 0.0) {
+                            better = r2;
+                            worse = r1;
+                        }
+
+                        // Merge discovered players
+                        Set<UUID> mergedPlayers = new HashSet<>(better.getDiscoveredPlayers());
+                        mergedPlayers.addAll(worse.getDiscoveredPlayers());
+
+                        String finalWorld = better.getWorldName();
+                        if ((finalWorld == null || finalWorld.isEmpty() || finalWorld.equals("null")) && worse.getWorldName() != null) {
+                            finalWorld = worse.getWorldName();
+                        }
+                        double finalY = better.getY();
+                        if (finalY <= 0.0 && worse.getY() > 0.0) {
+                            finalY = worse.getY();
+                        }
+
+                        // Recreate the better record
+                        StructureRecord upgraded = new StructureRecord(
+                            better.getId(),
+                            better.getType(),
+                            better.getX(),
+                            finalY,
+                            better.getZ(),
+                            finalWorld,
+                            better.getCustomName(),
+                            mergedPlayers
+                        );
+
+                        // Save the upgraded record
+                        typeCache.put(upgraded.getId(), upgraded);
+                        saveRecord(upgraded);
+
+                        // Delete the worse record's file and remove from cache
+                        typeCache.remove(worse.getId());
+                        removedIds.add(worse.getId());
+                        deleteRecordFile(worse);
+                        
+                        plugin.getLogger().info("[HereNavy] Merged duplicate structures: " + worse.getId() + " merged into " + upgraded.getId() + " (" + upgraded.getCustomName() + ")");
+                        
+                        if (better == r1) {
+                            r1 = upgraded;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void deleteRecordFile(StructureRecord record) {
+        String typeFolder = getFolderName(record.getType());
+        File folder = new File(structuresFolder, typeFolder);
+        File file = new File(folder, record.getId().toString() + ".yml");
+        if (file.exists()) {
+            file.delete();
+        }
     }
 
     /**
