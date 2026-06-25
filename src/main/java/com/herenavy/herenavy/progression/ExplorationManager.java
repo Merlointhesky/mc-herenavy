@@ -201,7 +201,7 @@ public final class ExplorationManager {
                     // 1. Passive Biome Discovery
                     Location loc = player.getLocation();
                     Biome biome = loc.getBlock().getBiome();
-                    String biomeKey = "minecraft:" + biome.name().toLowerCase();
+                    String biomeKey = biome.getKey().toString();
                     
                     if (!data.hasDiscoveredBiome(biomeKey)) {
                         data.discoverBiome(biomeKey);
@@ -209,7 +209,7 @@ public final class ExplorationManager {
                         int exp = plugin.getConfigManager().getExpPerBiome();
                         
                         player.sendMessage(MiniMessage.miniMessage().deserialize(
-                            "<green>🌍 Discovered new Biome: <bold>" + formatName(biome.name()) + "</bold>!</green>"
+                            "<green>🌍 Discovered new Biome: <bold>" + formatName(biome.getKey().getKey()) + "</bold>!</green>"
                         ));
                         awardExp(player, exp);
                     }
@@ -232,7 +232,9 @@ public final class ExplorationManager {
 
         for (org.bukkit.generator.structure.GeneratedStructure genStruct : structures) {
             Structure struct = genStruct.getStructure();
-            String structKey = struct.getKey().toString();
+            org.bukkit.NamespacedKey nKey = Registry.STRUCTURE.getKey(struct);
+            if (nKey == null) continue;
+            String structKey = nKey.toString();
             
             // Skip discovery if structure tracking is disabled by administration
             if (!plugin.getConfigManager().isStructureTracked(structKey)) {

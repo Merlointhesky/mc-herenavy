@@ -84,16 +84,19 @@ public final class HereNavyAPI {
                 try {
                     org.bukkit.Chunk chunk = loc.getChunk();
                     for (org.bukkit.generator.structure.GeneratedStructure genStruct : loc.getWorld().getStructures(chunk.getX(), chunk.getZ())) {
-                        String key = genStruct.getStructure().getKey().toString();
-                        if (key.contains("village")) {
-                            structType = key;
-                            break;
+                        org.bukkit.NamespacedKey nKey = org.bukkit.Registry.STRUCTURE.getKey(genStruct.getStructure());
+                        if (nKey != null) {
+                            String key = nKey.toString();
+                            if (key.contains("village")) {
+                                structType = key;
+                                break;
+                            }
                         }
                     }
                 } catch (Throwable ignored) {}
 
                 if (structType.equals("minecraft:village_plains")) {
-                    String biomeName = loc.getBlock().getBiome().name().toLowerCase();
+                    String biomeName = loc.getBlock().getBiome().getKey().getKey().toLowerCase();
                     if (biomeName.contains("desert")) {
                         structType = "minecraft:village_desert";
                     } else if (biomeName.contains("savanna")) {

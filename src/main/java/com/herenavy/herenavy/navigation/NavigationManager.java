@@ -86,22 +86,25 @@ public final class NavigationManager {
     public boolean startBiomeNavigation(Player player, String biomeKey) {
         stopNavigation(player, false);
 
-        String rawBiomeName = biomeKey.split(":")[1].toUpperCase();
-        Biome biome;
-        try {
-            biome = Biome.valueOf(rawBiomeName);
-        } catch (IllegalArgumentException e) {
-            player.sendMessage(MiniMessage.miniMessage().deserialize("<red>Invalid biome type: " + rawBiomeName + "</red>"));
+        NamespacedKey namespacedKey = NamespacedKey.fromString(biomeKey);
+        if (namespacedKey == null) {
+            player.sendMessage(MiniMessage.miniMessage().deserialize("<red>Invalid biome key: " + biomeKey + "</red>"));
+            return false;
+        }
+        Biome biome = Registry.BIOME.get(namespacedKey);
+        if (biome == null) {
+            player.sendMessage(MiniMessage.miniMessage().deserialize("<red>Could not find biome: " + biomeKey + "</red>"));
             return false;
         }
 
-        player.sendMessage(MiniMessage.miniMessage().deserialize("<gray>Locating nearest " + formatName(rawBiomeName) + "...</gray>"));
+        String biomeName = namespacedKey.getKey();
+        player.sendMessage(MiniMessage.miniMessage().deserialize("<gray>Locating nearest " + formatName(biomeName) + "...</gray>"));
 
         // Use Bukkit biome locator (2000 blocks search radius)
         org.bukkit.util.BiomeSearchResult searchResult = player.getWorld().locateNearestBiome(player.getLocation(), 2000, 32, 64, biome);
         Location biomeLoc = searchResult != null ? searchResult.getLocation() : null;
         if (biomeLoc == null) {
-            player.sendMessage(MiniMessage.miniMessage().deserialize("<red>Could not find a " + formatName(rawBiomeName) + " biome within 2000 blocks!</red>"));
+            player.sendMessage(MiniMessage.miniMessage().deserialize("<red>Could not find a " + formatName(biomeName) + " biome within 2000 blocks!</red>"));
             return false;
         }
 
@@ -109,7 +112,7 @@ public final class NavigationManager {
         sessions.put(player.getUniqueId(), session);
 
         player.sendMessage(MiniMessage.miniMessage().deserialize(
-            "<green>Navigation started to <bold>" + formatName(rawBiomeName) + "</bold>!</green>"
+            "<green>Navigation started to <bold>" + formatName(biomeName) + "</bold>!</green>"
         ));
 
         arrowManager.createArrow(player, biomeLoc);
